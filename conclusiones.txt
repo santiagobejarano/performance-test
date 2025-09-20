@@ -1,0 +1,52 @@
+CONCLUSIONES - Ejercicio Performance Login
+------------------------------------------
+
+1. Automatización del flujo de performance:
+   - Se desarrolló un test de carga utilizando K6 para validar el endpoint de login.
+   - El escenario fue configurado con un flujo constante de 20 TPS durante 1 minuto, con un máximo de 100 usuarios virtuales.
+
+2. Manejo de datos externos:
+   - Se parametrizaron usuarios y contraseñas en un archivo CSV.
+   - Esto permitió simular diferentes logins simultáneos con datos reales.
+
+3. Configuración técnica:
+   - Node.js v22.15.1 y npm v11.4.0 fueron utilizados para automatizar el flujo.
+   - K6 v1.2.3 se usó como motor principal de performance testing.
+   - El entorno se configuró sobre Windows 10.
+
+4. Reportes:
+   - Los resultados se exportaron en formato JSON (`summary.json`).
+   - Se generó un reporte HTML (`login_performance_report.html`) con métricas visuales de throughput, latencia y errores.
+
+5. Retos encontrados:
+   - Inicialmente, las validaciones fallaban porque se esperaba `status 200`.
+   - La API realmente devuelve `status 201` al crear un token, lo cual fue confirmado con pruebas de debugging.
+   - Tras corregir la validación, los tests pasaron exitosamente.
+
+6. Resultados finales:
+   - Throughput: 19.58 req/s (equivalente al objetivo de 20 TPS).
+   - p95 de latencia: 362 ms (muy por debajo del límite de 1500 ms).
+   - Tasa de error: 0.00% (por debajo del 3%).
+   - Todas las validaciones funcionales pasaron.
+
+7. Valor agregado:
+   - Se documentó el flujo completo en `README.md`.
+   - Se integró un pipeline de ejecución y generación de reportes HTML.
+   - Se aplicaron buenas prácticas en el manejo de datos externos y validaciones SLA.
+
+LECCIÓN APRENDIDA IMPORTANTE
+----------------------------
+PROBLEMA INICIAL IDENTIFICADO:
+- El test fallaba porque validábamos `status === 200`.
+
+PROCESO DE DEBUGGING:
+- Se ejecutaron pruebas exploratorias para verificar la respuesta real de la API.
+- Descubrimos que el endpoint de login devuelve `status 201 (Created)`.
+
+SOLUCIÓN IMPLEMENTADA:
+- Actualizamos las validaciones para aceptar `status === 201`.
+- Esto permitió que las pruebas cumplieran correctamente los SLA establecidos.
+
+CONCLUSIÓN GENERAL:
+El ejercicio de performance fue exitoso: se alcanzaron los objetivos de TPS, tiempo de respuesta y tasa de error.  
+El sistema quedó documentado, reproducible y con reportes profesionales que facilitan la validación por parte de evaluadores.
