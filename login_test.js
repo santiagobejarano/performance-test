@@ -55,7 +55,7 @@ export default function () {
 
   // 📌 Validaciones
   check(res, {
-    'status es 200': (r) => r.status === 200,
+    'status es 201 (Created)': (r) => r.status === 201,
     'respuesta contiene token': (r) => r.json('token') !== undefined,
   });
 
